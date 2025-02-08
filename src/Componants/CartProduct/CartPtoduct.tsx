@@ -1,8 +1,8 @@
 import { Idata } from "../../interFaces/InterFaces";
 import { descSeeMore } from "../../Utils/Utils";
-import Button from "../Button/Button";
-import Colors from "../Colors/Colors";
-import Image from "../Image/Image";
+import Button from "../UI/Button/Button";
+import Colors from "../UI/Colors/Colors";
+import Image from "../UI/Image/Image";
 interface Ipropse {
   product: Idata;
 }
@@ -12,38 +12,42 @@ const CartProduct = ({ product }: Ipropse) => {
     <Colors key={index} colors={color} />
   ));
   return (
-    <div className="border border-gray-400 flex flex-col p-2 my-5 mx-2">
-      <div>
-        <Image
-          style={{ height: "200px" }}
-          imgUrl={imageURL}
-          alt="phto"
-          className="w-full rounded-md"
-        />
-        <h4>{title}</h4>
-        <p>{descSeeMore(description)}</p>
-      </div>
-      <div className="flex space-x-2 my-7">{colorsList}</div>
-      <div className="flex items-center justify-between">
-        <span>${price}</span>
-        <span className="flex flex-col items-center">
-          <img
-            src={category.imageURL}
-            alt=""
-            className="w-10 h-10 rounded-full object-center"
+    <>
+      <div className="border border-gray-400 flex flex-col p-2 my-5 mx-2">
+        <div>
+          <Image
+            imgUrl={imageURL}
+            alt="phto"
+            className="rounded-md max-sm:w-md mx-auto"
           />
-          {category.name}
-        </span>
+          <div className="mx-auto h-32 mt-2">
+            <h4>{title}</h4>
+            <p>{descSeeMore(description)}</p>
+          </div>
+        </div>
+
+        <div className="flex space-x-2">{colorsList}</div>
+        <div className="flex items-center justify-between my-2">
+          <span>${price}</span>
+          <span className="flex flex-col items-center">
+            <img
+              src={category.imageURL}
+              alt=""
+              className="w-10 h-10 rounded-full object-center"
+            />
+            {category.name}
+          </span>
+        </div>
+        <div className="flex space-x-2 my-5">
+          <Button className="bg-indigo-500" width="w-full">
+            Edit{" "}
+          </Button>
+          <Button className="bg-red-500" width="w-full">
+            Remove
+          </Button>
+        </div>
       </div>
-      <div className="flex space-x-2 my-5">
-        <Button className="bg-indigo-500" width="w-full">
-          Edit{" "}
-        </Button>
-        <Button className="bg-red-500" width="w-full">
-          Remove
-        </Button>
-      </div>
-    </div>
+    </>
   );
 };
 export default CartProduct;
