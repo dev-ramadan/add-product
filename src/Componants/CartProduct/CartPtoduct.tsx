@@ -18,7 +18,7 @@ const CartProduct = ({ product }: Ipropse) => {
           <Image
             imgUrl={imageURL}
             alt="phto"
-            className="rounded-md max-sm:w-md mx-auto"
+            className="rounded-md max-sm:w-md max-md:w-xl  mx-auto h-40"
           />
           <div className="mx-auto h-32 mt-2">
             <h4>{title}</h4>

@@ -1,4 +1,4 @@
-import { Idata } from "../interFaces/InterFaces";
+import { Idata, IFormInput } from "../interFaces/InterFaces";
 export const productList: Idata[] = [
     {
       id:1,
@@ -144,4 +144,30 @@ export const productList: Idata[] = [
     },
   ];
   
+  export const formInputsList: IFormInput[] = [
+    {
+      id: "title",
+      name: "title",
+      label: "Product Title",
+      type: "text",
+    },
+    {
+      id: "description",
+      name: "description",
+      label: "Product Description",
+      type: "text",
+    },
+    {
+      id: "image",
+      name: "imageURL",
+      label: "Product Image URL",
+      type: "text",
+    },
+    {
+      id: "price",
+      name: "price",
+      label: "Product Price",
+      type: "text",
+    },
+  ];
   

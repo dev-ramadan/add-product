@@ -1,13 +1,23 @@
 import { useState } from "react";
 import CartProduct from "./Componants/CartProduct/CartPtoduct";
 import Modal from "./Componants/UI/Modal/Modal";
-import { productList } from "./data/data";
+import { formInputsList, productList } from "./data/data";
 import Button from "./Componants/UI/Button/Button";
+import Input from "./Componants/UI/Input/Input";
 
 const App = () => {
+  // HANDEEL DATA
   const renderProduct = productList.map((product) => (
     <CartProduct key={product.id} product={product} />
   ));
+
+      // HANDELL INPUT
+    const  handeelInput = formInputsList.map(input => (
+    <div className="flex flex-col">
+      <label htmlFor={input.id}>{input.label}</label>
+      <Input type="text" id={input.id} name={input.name}/>
+    </div>
+    ))
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -30,6 +40,15 @@ const App = () => {
               closeModal={closeModal}
               title="ADD PTODUCT"
             >
+
+
+
+           <form >
+              {/* INPUTS */}
+ 
+              {handeelInput}
+
+              {/* BUTTONS */}
               <div className="flex space-x-2 my-5">
                 <Button className="bg-indigo-500" width="w-full">
                   SUBMINT
@@ -42,6 +61,7 @@ const App = () => {
                   CANCLE
                 </Button>
               </div>
+           </form>
             </Modal>
           </div>
         </div>

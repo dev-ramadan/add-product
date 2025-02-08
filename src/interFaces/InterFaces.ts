@@ -1,5 +1,4 @@
-export 
-interface Idata {
+export interface Idata {
     id : string | undefined | number;
     title : string;
     imageURL : string;
@@ -10,4 +9,11 @@ interface Idata {
     name : string;
     imageURL : string;
     };
+}
+
+export interface IFormInput {
+    id:string;
+    label:string;
+    name:string;
+    type:string;
 }
