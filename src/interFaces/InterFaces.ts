@@ -1,5 +1,5 @@
 export interface Idata {
-    id : string | undefined | number;
+    id ?: string | undefined | number;
     title : string;
     imageURL : string;
     price:string;
@@ -14,6 +14,6 @@ export interface Idata {
 export interface IFormInput {
     id:string;
     label:string;
-    name:string;
+    name:'title'|'description'|'price'|'imageURL';
     type:string;
 }

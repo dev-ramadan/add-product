@@ -1,33 +1,53 @@
-import { useState } from "react";
+import {ChangeEvent, useState } from "react";
 import CartProduct from "./Componants/CartProduct/CartPtoduct";
 import Modal from "./Componants/UI/Modal/Modal";
 import { formInputsList, productList } from "./data/data";
 import Button from "./Componants/UI/Button/Button";
 import Input from "./Componants/UI/Input/Input";
-
+import { Idata } from "./interFaces/InterFaces";
 const App = () => {
-  // HANDEEL DATA
-  const renderProduct = productList.map((product) => (
-    <CartProduct key={product.id} product={product} />
-  ));
 
-      // HANDELL INPUT
-    const  handeelInput = formInputsList.map(input => (
-    <div className="flex flex-col">
-      <label htmlFor={input.id}>{input.label}</label>
-      <Input type="text" id={input.id} name={input.name}/>
-    </div>
-    ))
 
   const [isOpen, setIsOpen] = useState(false);
+  const [addProductInput,SetAddProductInput] = useState<Idata>({
+    title:'',
+    description:'',
+    imageURL:'',
+    price:'',
+    colors:[],
+    category:{
+      imageURL:'',
+      name:""
+    }
+  
+  })
 
-  function closeModal() {
-    setIsOpen(false);
+  const closeModal = () => setIsOpen(false);
+
+  const openModal = () => setIsOpen(true);
+  
+  const handlaerProduct = (e:ChangeEvent<HTMLInputElement>) => {
+    const {value,name} = e.target;
+    SetAddProductInput({
+      ...addProductInput,
+      [name]:value
+    })
+
   }
 
-  function openModal() {
-    setIsOpen(true);
-  }
+    // HANDEEL DATA
+    const renderProduct = productList.map((product) => (
+      <CartProduct key={product.id} product={product} />
+    ));
+  
+        // HANDELL INPUT
+      const  handeelInput = formInputsList.map(input => (
+      <div key={input.id} className="flex flex-col">
+        <label htmlFor={input.id}>{input.label}</label>
+        <Input type="text" id={input.id} name={input.name} value={addProductInput[input.name] } onChange={handlaerProduct} />
+      </div>
+      ))
+
   return (
     <>
       <main className="container mx-auto">
@@ -36,7 +56,7 @@ const App = () => {
           <div>
             <Modal
               isOpen={isOpen}
-              openModal={openModal}
+              openModal={()=>openModal()}
               closeModal={closeModal}
               title="ADD PTODUCT"
             >
@@ -46,7 +66,7 @@ const App = () => {
            <form >
               {/* INPUTS */}
  
-              {handeelInput}
+              {handeelInput }
 
               {/* BUTTONS */}
               <div className="flex space-x-2 my-5">
