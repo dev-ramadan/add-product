@@ -1,4 +1,4 @@
-import {ChangeEvent, useState } from "react";
+import {ChangeEvent, FormEvent, useState } from "react";
 import CartProduct from "./Componants/CartProduct/CartPtoduct";
 import Modal from "./Componants/UI/Modal/Modal";
 import { formInputsList, productList } from "./data/data";
@@ -7,9 +7,7 @@ import Input from "./Componants/UI/Input/Input";
 import { Idata } from "./interFaces/InterFaces";
 const App = () => {
 
-
-  const [isOpen, setIsOpen] = useState(false);
-  const [addProductInput,SetAddProductInput] = useState<Idata>({
+  const defultProduct = {
     title:'',
     description:'',
     imageURL:'',
@@ -18,9 +16,10 @@ const App = () => {
     category:{
       imageURL:'',
       name:""
-    }
-  
-  })
+  }
+}
+  const [isOpen, setIsOpen] = useState(false);
+  const [addProductInput,SetAddProductInput] = useState<Idata>(defultProduct)
 
   const closeModal = () => setIsOpen(false);
 
@@ -48,6 +47,16 @@ const App = () => {
       </div>
       ))
 
+      // HANDEL FORM && FORM BUTTON
+      const submintFormHandler = (e:FormEvent<HTMLFormElement>) => e.preventDefault();
+
+      const canselHandelr = () => {
+        SetAddProductInput(defultProduct)
+        closeModal()
+      }
+    
+    
+
   return (
     <>
       <main className="container mx-auto">
@@ -63,10 +72,10 @@ const App = () => {
 
 
 
-           <form >
+           <form onSubmit={submintFormHandler}>
               {/* INPUTS */}
  
-              {handeelInput }
+              {handeelInput}
 
               {/* BUTTONS */}
               <div className="flex space-x-2 my-5">
@@ -76,7 +85,8 @@ const App = () => {
                 <Button
                   className="bg-gray-500"
                   width="w-full"
-                  onClick={() => closeModal()}
+                  type="button"
+                  onClick={() => canselHandelr()}
                 >
                   CANCLE
                 </Button>
