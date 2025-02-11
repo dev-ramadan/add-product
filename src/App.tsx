@@ -5,6 +5,8 @@ import { formInputsList, productList } from "./data/data";
 import Button from "./Componants/UI/Button/Button";
 import Input from "./Componants/UI/Input/Input";
 import { Idata } from "./interFaces/InterFaces";
+import { validationProduct } from "./Componants/Validation/Validation";
+import Error from "./Componants/Error/Error";
 const App = () => {
 
   const defultProduct = {
@@ -19,8 +21,8 @@ const App = () => {
   }
 }
   const [isOpen, setIsOpen] = useState(false);
-  const [addProductInput,SetAddProductInput] = useState<Idata>(defultProduct)
-
+  const [addProductInput,SetAddProductInput] = useState<Idata>(defultProduct);
+  const [error,setError] = useState({title:"",price:"",description:"",imageURL:""})
   const closeModal = () => setIsOpen(false);
 
   const openModal = () => setIsOpen(true);
@@ -31,7 +33,10 @@ const App = () => {
       ...addProductInput,
       [name]:value
     })
-
+    setError({
+      ...error,
+      [name]:""
+    })
   }
 
     // HANDEEL DATA
@@ -44,11 +49,27 @@ const App = () => {
       <div key={input.id} className="flex flex-col">
         <label htmlFor={input.id}>{input.label}</label>
         <Input type="text" id={input.id} name={input.name} value={addProductInput[input.name] } onChange={handlaerProduct} />
+        <Error msg={error[input.name]}/>
       </div>
       ))
 
       // HANDEL FORM && FORM BUTTON
-      const submintFormHandler = (e:FormEvent<HTMLFormElement>) => e.preventDefault();
+      const submintFormHandler = (e:FormEvent<HTMLFormElement>) =>{
+        e.preventDefault();
+        const {title,price,imageURL,description} = addProductInput
+        const errors = validationProduct({
+          title,
+          price,
+          imageURL,
+          description
+        })
+        const handelError = 
+        Object.values(errors).some(value => value !== "" && Object.values(errors).every(value => value !== ""))
+        if(handelError){setError(errors)
+          return;
+      }
+      console.log('sucsess') 
+        }
 
       const canselHandelr = () => {
         SetAddProductInput(defultProduct)

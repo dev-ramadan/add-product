@@ -17,3 +17,10 @@ export interface IFormInput {
     name:'title'|'description'|'price'|'imageURL';
     type:string;
 }
+
+export default  interface IValidation {
+    title : string;
+    imageURL : string;
+    price:string;
+    description :string;
+}
