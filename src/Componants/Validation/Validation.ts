@@ -7,7 +7,7 @@ const errors:{title:string,description:string,price:string,imageURL:string}= {
     price:"",
     imageURL:"",
 }
-const imgUrlPattern = /^(ftp|http|https):\/\//.test(product.imageURL);
+const imgUrlPattern = /^(data|ftp|http|https)/.test(product.imageURL);
 
 if(!product.title.trim() || product.title.length < 10 || product.title.length > 80){
     errors.title = 'TITLE MUST BETWEEN 10 CHR AND 80 CHR'

@@ -1,6 +1,7 @@
 import { Idata } from "../../interFaces/InterFaces";
 import { descSeeMore } from "../../Utils/Utils";
 import Button from "../UI/Button/Button";
+import Category from "../UI/Category/Category";
 import Colors from "../UI/Colors/Colors";
 import Image from "../UI/Image/Image";
 interface Ipropse {
@@ -9,7 +10,7 @@ interface Ipropse {
 const CartProduct = ({ product }: Ipropse) => {
   const { imageURL, title, description, colors, price, category } = product;
   const colorsList = colors.map((color, index) => (
-    <Colors key={index} colors={color} />
+    <Colors key={index} bg={color} />
   ));
   return (
     <>
@@ -18,7 +19,7 @@ const CartProduct = ({ product }: Ipropse) => {
           <Image
             imgUrl={imageURL}
             alt="phto"
-            className="rounded-md max-sm:w-md max-md:w-xl  mx-auto h-40"
+            className="rounded-md max-sm:w-md max-md:max-h-64 max-md:w-lg h-50 mx-auto"
           />
           <div className="mx-auto h-32 mt-2">
             <h4>{title}</h4>
@@ -28,16 +29,9 @@ const CartProduct = ({ product }: Ipropse) => {
 
         <div className="flex space-x-2">{colorsList}</div>
         <div className="flex items-center justify-between my-2">
-          <span>${price}</span>
-          <span className="flex flex-col items-center">
-            <img
-              src={category.imageURL}
-              alt=""
-              className="w-10 h-10 rounded-full object-center"
-            />
-            {category.name}
-          </span>
-        </div>
+       <span>{price}</span>
+       <Category name={category.name} imageURL={category.imageURL}/>
+       </div>
         <div className="flex space-x-2 my-5">
           <Button className="bg-indigo-500" width="w-full">
             Edit{" "}

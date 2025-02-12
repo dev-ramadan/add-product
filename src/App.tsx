@@ -1,14 +1,18 @@
 import {ChangeEvent, FormEvent, useState } from "react";
 import CartProduct from "./Componants/CartProduct/CartPtoduct";
 import Modal from "./Componants/UI/Modal/Modal";
-import { formInputsList, productList } from "./data/data";
+import {  colors, formInputsList, productList } from "./data/data";
 import Button from "./Componants/UI/Button/Button";
 import Input from "./Componants/UI/Input/Input";
 import { Idata } from "./interFaces/InterFaces";
 import { validationProduct } from "./Componants/Validation/Validation";
 import Error from "./Componants/Error/Error";
-const App = () => {
+import Colors from "./Componants/UI/Colors/Colors";
+import {v4 as uuid } from "uuid";
 
+
+
+const App = () => {  
   const defultProduct = {
     title:'',
     description:'',
@@ -18,13 +22,15 @@ const App = () => {
     category:{
       imageURL:'',
       name:""
+    }
   }
-}
   const [isOpen, setIsOpen] = useState(false);
+  const [newProduct,setNewProduct] = useState<Idata[]>(productList)
   const [addProductInput,SetAddProductInput] = useState<Idata>(defultProduct);
+  const [tempColor,setTempColor] = useState<string[]>([])
   const [error,setError] = useState({title:"",price:"",description:"",imageURL:""})
   const closeModal = () => setIsOpen(false);
-
+  
   const openModal = () => setIsOpen(true);
   
   const handlaerProduct = (e:ChangeEvent<HTMLInputElement>) => {
@@ -39,10 +45,14 @@ const App = () => {
     })
   }
 
+
+
     // HANDEEL DATA
-    const renderProduct = productList.map((product) => (
+    const renderProduct = newProduct.map((product) => (
       <CartProduct key={product.id} product={product} />
     ));
+
+
   
         // HANDELL INPUT
       const  handeelInput = formInputsList.map(input => (
@@ -51,7 +61,34 @@ const App = () => {
         <Input type="text" id={input.id} name={input.name} value={addProductInput[input.name] } onChange={handlaerProduct} />
         <Error msg={error[input.name]}/>
       </div>
+      ));
+
+
+
+
+      // HANDELL COLORS 
+      const colorList = colors.map((color,index)=>(
+        <Colors key={index} bg={color} onClick={()=>{
+          if(tempColor.includes(color)){
+           setTempColor(tempColor.filter(item => item !== color))
+          }else{
+            setTempColor(prev =>[...prev,color]);
+          }
+        }}/>
       ))
+
+      const colorChose = tempColor.map(thisColor => (
+        <span key={thisColor} className="mx-0.5 rounded-md p-0.5" style={{backgroundColor:`${thisColor}`}}>{thisColor}</span>
+      ));
+
+
+
+      // HANDELL CATEGORY
+
+      // const categoryList = categories.map(categorie =>(
+      //   <Category key={categorie.id} name={categorie.name} imageURL={categorie.imageURL}/>
+      // ))
+
 
       // HANDEL FORM && FORM BUTTON
       const submintFormHandler = (e:FormEvent<HTMLFormElement>) =>{
@@ -64,11 +101,17 @@ const App = () => {
           description
         })
         const handelError = 
-        Object.values(errors).some(value => value !== "" && Object.values(errors).every(value => value !== ""))
-        if(handelError){setError(errors)
+        Object.values(errors).some(value => value === "" && Object.values(errors).every(value => value === ""))
+        if(!handelError){setError(errors)
           return;
+      }else{
+        console.log('sucsess') 
+        SetAddProductInput(defultProduct)
+        setNewProduct(prev => [{...addProductInput,colors:tempColor,id:uuid()},...prev]);
+        setTempColor([])
+        closeModal()
       }
-      console.log('sucsess') 
+      
         }
 
       const canselHandelr = () => {
@@ -94,9 +137,17 @@ const App = () => {
 
 
            <form onSubmit={submintFormHandler}>
-              {/* INPUTS */}
- 
-              {handeelInput}
+                {/* INPUTS */}
+               {handeelInput}
+               {colorChose}
+               <div className="flex items-center space-x-2 mt-1">
+               {colorList}
+               </div>
+
+        {/* <div className="flex items-center justify-between my-2">
+          {categoryList}
+        </div> */}
+
 
               {/* BUTTONS */}
               <div className="flex space-x-2 my-5">

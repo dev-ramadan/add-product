@@ -52,6 +52,7 @@ const Modal = ({ children, isOpen, title, openModal, closeModal }: IProps) => {
                     {title}
                   </Dialog.Title>
                   {children}
+
                 </Dialog.Panel>
               </Transition.Child>
             </div>

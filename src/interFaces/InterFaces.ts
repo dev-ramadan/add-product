@@ -18,9 +18,9 @@ export interface IFormInput {
     type:string;
 }
 
-export default  interface IValidation {
-    title : string;
-    imageURL : string;
-    price:string;
-    description :string;
+export interface ICategory {
+    id:number,
+    name:string,
+    imageURL:string
 }
+
