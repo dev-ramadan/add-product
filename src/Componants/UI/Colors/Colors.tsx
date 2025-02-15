@@ -5,7 +5,7 @@ interface Ipropse extends HTMLAttributes<HTMLSpanElement>{
 const Colors = ({bg,...rest}:Ipropse) => {
     return (
         
-            <span {...rest} style={{backgroundColor:bg}} className="w-5 h-5 rounded-full block"></span>
+            <span {...rest} style={{backgroundColor:bg}} className="w-5 h-5 rounded-full block mt-2"></span>
     )
 }
 export default Colors

@@ -1,26 +1,21 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { ReactNode } from "react";
 import { Fragment } from "react/jsx-runtime";
-import Button from "../Button/Button";
 
 interface IProps {
   children: ReactNode;
   isOpen: boolean;
-  openModal: () => void;
   closeModal: () => void;
   title: string;
 }
 
-const Modal = ({ children, isOpen, title, openModal, closeModal }: IProps) => {
+const Modal = ({ children, isOpen, title,closeModal }: IProps) => {
   return (
     <>
-      <div className="flex items-center justify-center">
-        <Button className="bg-indigo-400" width="w-fit" onClick={()=>openModal()}>
-        BULID PRODUCT
-        </Button>
-      </div>
+
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
+          <div className="fixed inset-0 backdrop-blur-xs" aria-hidden="true"/>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
